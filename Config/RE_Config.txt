@@ -1,0 +1,32 @@
+# --- IP Config ---
+RE# conf t
+RE(config)# interface f0/1
+RE(config-if)# ip address 10.0.0.1 255.255.255.252
+RE(config-if)# exit
+RE(config)# interface f0/0
+RE(config-if)# ip address dhcp
+RE(config-if)# exit
+
+# --- appliquer le NAT ---
+RE(config)# interface f0/0
+RE(config-if)# ip nat outside
+RE(config-if)# exit
+RE(config)# interface f0/1
+RE(config-if)# ip nat inside
+RE(config-if)# exit
+RE(config)# ip nat inside source list 1 interface FastEthernet0/0 overload
+
+# --- Acces-list ---
+RE(config)# access-list 1 permit 10.0.1.0 0.0.0.255
+RE(config)# access-list 1 permit 10.0.2.0 0.0.0.255
+RE(config)# access-list 1 permit 10.0.3.0 0.0.0.255
+RE(config)# access-list 1 permit 10.0.0.0 0.0.0.3
+
+# ip route ---
+RE(config)# ip route 0.0.0.0 0.0.0.0 192.168.42.1
+RE(config)# end
+
+
+#show ip interface brief
+#show ip route
+# show ip nat statistics

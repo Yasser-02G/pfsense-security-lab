@@ -1,0 +1,50 @@
+3.3. 	DHCP-Server:
+
+•	IP :
+# Static config for eth0
+auto eth0
+iface eth0 inet static
+    address 10.0.2.30
+    netmask 255.255.255.0
+    gateway 10.0.2.1
+    up echo nameserver 10.0.2.1 > /etc/resolv.conf
+•	Service :
+root@Server-DHCP:~# cat /etc/dhcp/dhcpd.conf
+
+# Options globales (Optionnel, à adapter selon tes besoins)
+option domain-name "cyberlab.local";
+option domain-name-servers 8.8.8.8, 1.1.1.1;
+
+default-lease-time 600;
+max-lease-time 7200;
+
+ddns-update-style none;
+authoritative;
+
+# =================================================================
+# 1. DECLARATION DE LA ZONE DMZ (Où réside le serveur DHCP)
+# =================================================================
+# Même si le serveur n'attribue pas d'IP dynamiques en DMZ (car tes serveurs 
+# ont des IPs statiques), cette déclaration est INDISPENSABLE pour que 
+# le service DHCP accepte de démarrer sur son interface réseau (ex: eth0).
+subnet 10.0.2.0 netmask 255.255.255.0 {
+    # On laisse ce bloc vide ou sans "range" si la DMZ n'a pas de clients dynamiques
+    # (pfSense, Web, FTP et DHCP ont déjà leurs IPs fixes).
+}
+
+# =================================================================
+# 2. CONFIGURATION DE LA ZONE LAN (Via le DHCP Relay de pfSense)
+# =================================================================
+# C'est ce bloc que pfSense va interroger lorsqu'un client LAN fera une requête.
+subnet 10.0.1.0 netmask 255.255.255.0 {
+    # Plage d'adresses IP dynamiques allouées aux clients du LAN
+    range 10.0.1.50 10.0.1.100;
+    
+    # La passerelle par défaut pour les clients du LAN (L'IP de pfSense côté LAN)
+    option routers 10.0.1.1;
+    
+    # Optionnel : Serveur DNS spécifique pour le LAN si nécessaire
+    option domain-name-servers 10.0.1.1; 
+}
+
+# service isc-dhcp-server restart

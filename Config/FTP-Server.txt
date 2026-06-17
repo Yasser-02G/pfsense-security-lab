@@ -1,0 +1,16 @@
+2.3. 	FTP-Server :
+
+•	IP :
+# Static config for eth0
+auto eth0
+iface eth0 inet static
+    address 10.0.2.20
+    netmask 255.255.255.0
+    gateway 10.0.2.1
+    up echo nameserver 10.0.2.1 > /etc/resolv.conf
+•	Service :
+# apt install vsftpd -y
+# sed -i 's/#write_enable=YES/write_enable=YES/' /etc/vsftpd.conf
+# systemctl restart vsftpd
+
+
