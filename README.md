@@ -11,26 +11,9 @@ This lab simulates a real-world enterprise network with a multi-zone security ar
 ---
 
 ## 🏗️ Network Architecture
+![Network Architecture](screenshots/network-architecture.svg)
 
-```
-                        INTERNET (WAN: 192.168.1.0/24)
-                               |
-                         [Edge Router]
-                         fa0/0: DHCP
-                         fa0/1: 10.0.0.1/30
-                               |
-                    ┌──────────────────────┐
-                    │   pfSense Firewall   │
-                    │  - Suricata IDS/IPS  │
-                    │  - NAT / Port Fwd    │
-                    │  - OpenVPN Server    │
-                    │  - Strict FW Rules   │
-                    └──────────────────────┘
-           ┌──────────────┬──────────────┐
-           │              │              │
-      [LAN Zone]     [DMZ Zone]    [MGMT Zone]
-     10.0.1.0/24    10.0.2.0/24   10.0.3.0/24
-```
+---
 
 ### Zones
 
@@ -62,11 +45,6 @@ This lab simulates a real-world enterprise network with a multi-zone security ar
 - Admin access via MGMT zone
 - IP tunnel: 10.0.8.x
 
-### SIEM — Wazuh
-- Deployed on MGMT zone (10.0.3.10)
-- Version: 4.14
-- Full log aggregation and alerting
-- Access: `https://10.0.3.10:443`
 
 ### Services Running
 | Service | Description | Status |
@@ -140,14 +118,12 @@ pfsense-lab/
 - [GNS3](https://www.gns3.com/) with VirtualBox integration
 - pfSense 2.7.2 ISO
 - Kali Linux 2025 image
-- Wazuh 4.14
 
 ### Quick Setup
 1. Import the GNS3 topology from `/Topologie/`
 2. Attach pfSense VM in VirtualBox
 3. Configure interfaces as per the network architecture above
 4. Access pfSense dashboard at `https://10.0.3.1`
-5. Access Wazuh SIEM at `https://10.0.3.10:443`
 
 ---
 
@@ -157,7 +133,6 @@ pfsense-lab/
 ![GNS3](https://img.shields.io/badge/GNS3-Lab-green?style=flat-square)
 ![Suricata](https://img.shields.io/badge/Suricata-IDS%2FIPS-orange?style=flat-square)
 ![OpenVPN](https://img.shields.io/badge/OpenVPN-Server-purple?style=flat-square)
-![Wazuh](https://img.shields.io/badge/Wazuh-4.14-red?style=flat-square)
 ![Kali Linux](https://img.shields.io/badge/Kali-Linux-557C94?style=flat-square)
 
 ---
