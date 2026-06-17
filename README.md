@@ -1,6 +1,6 @@
 # 🔐 pfSense Security Lab — Enterprise Network Architecture
 
-> A complete enterprise-grade network security lab built with pfSense, GNS3, Suricata IDS/IPS, OpenVPN, and Wazuh SIEM.
+> A complete enterprise-grade network security lab built with pfSense, GNS3, Suricata IDS/IPS, and OpenVPN.
 
 ---
 
