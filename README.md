@@ -11,7 +11,7 @@ This lab simulates a real-world enterprise network with a multi-zone security ar
 ---
 
 ## 🏗️ Network Architecture
-![Network Architecture](screenshots/network-architecture.svg)
+![Network Architecture](screenshots/net_architect.png)
 
 ---
 
